@@ -422,6 +422,10 @@ RUN \
     apt-get update --fix-missing && \
     apt-get install -y zsh  && \
     yes | sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#### Init
+RUN \
+    conda init zsh && \
+    chsh -s $(which zsh) $NB_USER
 #### Install Oh-My-Zsh Plugin
 RUN \
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions && echo "source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ${HOME}/.zshrc && \
@@ -429,10 +433,6 @@ RUN \
     git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search && echo "source ~/.oh-my-zsh/custom/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh" >> ${HOME}/.zshrc && \
     git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions && echo "source ~/.oh-my-zsh/custom/plugins/zsh-completions/zsh-completions.plugin.zsh" >> ${HOME}/.zshrc && \
     source ${HOME}/.zshrc
-#### Init
-RUN \
-    conda init zsh && \
-    chsh -s $(which zsh) $NB_USER
 ### END OH MY ZSH ###
 ### Start Ainize Worksapce ###
 COPY start.sh /scripts/start.sh
